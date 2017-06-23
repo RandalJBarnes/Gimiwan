@@ -138,6 +138,7 @@ int main(int argc, char* argv[]) {
 
    // Execute all of the computations.
    Results results;
+
    try {
        results = Engine(xo, yo, k_alpha, k_beta, k_count, h_alpha, h_beta, h_count, radius, obs, wells);
    }

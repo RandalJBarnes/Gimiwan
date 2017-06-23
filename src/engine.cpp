@@ -23,6 +23,28 @@
 #include "numerical_constants.h"
 #include "special_functions.h"
 
+//=============================================================================
+Results::Results() :
+   k_count(0),
+   h_count(0),
+   R_ev(),
+   R_sd(),
+   M_ev(),
+   M_sd(),
+   D_ev(),
+   D_sd() {
+}
+
+Results::Results( int k_count, int h_count ) :
+   k_count(k_count),
+   h_count(h_count),
+   R_ev(k_count, h_count),
+   R_sd(k_count, h_count),
+   M_ev(k_count, h_count),
+   M_sd(k_count, h_count),
+   D_ev(k_count, h_count),
+   D_sd(k_count, h_count) {
+}
 
 //=============================================================================
 // SetupQuadraticModel
@@ -234,8 +256,7 @@ ComputeGeohydrologyStatistics(
 //    computed at the specified focus location.
 //
 //=============================================================================
-std::tuple<Matrix, Matrix, Matrix, Matrix, Matrix, Matrix>
-Engine(
+Results Engine(
    double xo, double yo,
    double k_alpha, double k_beta, int k_count,
    double h_alpha, double h_beta, int h_count,
@@ -295,17 +316,9 @@ Engine(
       h[j] = exp(h_alpha + h_beta*GaussianCDFInv(p));
    }
 
-   // Initialize.
-   Matrix R_ev(k_count, h_count);
-   Matrix R_sd(k_count, h_count);
-
-   Matrix M_ev(k_count, h_count);
-   Matrix M_sd(k_count, h_count);
-
-   Matrix D_ev(k_count, h_count);
-   Matrix D_sd(k_count, h_count);
-
    // Fill the results.
+   Results results(k_count, h_count);
+
    for (int i = 0; i < k_count; ++i) {
       for (int j = 0; j < h_count; ++j) {
 
@@ -322,16 +335,16 @@ Engine(
          double r_ev, r_sd, m_ev, m_sd, d_ev, d_sd;
          std::tie(r_ev, r_sd, m_ev, m_sd, d_ev, d_sd) = ComputeGeohydrologyStatistics(P_ev, P_cov);
 
-         R_ev(i,j) = r_ev;
-         R_sd(i,j) = r_sd;
+         results.R_ev(i,j) = r_ev;
+         results.R_sd(i,j) = r_sd;
 
-         M_ev(i,j) = m_ev;
-         M_sd(i,j) = m_sd;
+         results.M_ev(i,j) = m_ev;
+         results.M_sd(i,j) = m_sd;
 
-         D_ev(i,j) = d_ev;
-         D_sd(i,j) = d_sd;
+         results.D_ev(i,j) = d_ev;
+         results.D_sd(i,j) = d_sd;
       }
    }
 
-   return std::make_tuple(R_ev, R_sd, M_ev, M_sd, D_ev, D_sd);
+   return results;
 }

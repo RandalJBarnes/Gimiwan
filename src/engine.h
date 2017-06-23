@@ -34,8 +34,27 @@ class CholeskyDecompositionFailed: public std::runtime_error {
 };
 
 //=============================================================================
-std::tuple<Matrix, Matrix, Matrix, Matrix, Matrix, Matrix>
-Engine(
+class Results {
+   public:
+      int k_count;
+      int h_count;
+
+      Matrix R_ev;
+      Matrix R_sd;
+
+      Matrix M_ev;
+      Matrix M_sd;
+
+      Matrix D_ev;
+      Matrix D_sd;
+
+      Results();
+      Results( int k_count, int h_count );
+};
+
+
+//=============================================================================
+Results Engine(
    double xo, double yo,
    double k_alpha, double k_beta, int k_count,
    double h_alpha, double h_beta, int h_count,

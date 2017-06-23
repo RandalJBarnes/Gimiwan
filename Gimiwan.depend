@@ -1,0 +1,44 @@
+# depslib dependency file v1.0
+1498219764 source:c:\users\randal\google drive\projects\gimiwan\src\main.cpp
+	<cstring>
+	<ctime>
+	<iostream>
+	"engine.h"
+	"now.h"
+	"numerical_constants.h"
+	"read_data.h"
+	"version.h"
+	"write_results.h"
+
+1498219983 c:\users\randal\google drive\projects\gimiwan\src\engine.h
+	<stdexcept>
+	<tuple>
+	<vector>
+	"matrix.h"
+	"read_data.h"
+
+1498217548 c:\users\randal\google drive\projects\gimiwan\src\matrix.h
+	<iostream>
+	<vector>
+
+1498217548 c:\users\randal\google drive\projects\gimiwan\src\read_data.h
+	<stdexcept>
+	<string>
+	<tuple>
+	<vector>
+
+1498217548 c:\users\randal\google drive\projects\gimiwan\src\now.h
+	<string>
+
+1498217548 c:\users\randal\google drive\projects\gimiwan\src\numerical_constants.h
+	<limits>
+
+1498217548 c:\users\randal\google drive\projects\gimiwan\src\version.h
+	<string>
+
+1498217548 c:\users\randal\google drive\projects\gimiwan\src\write_results.h
+	<stdexcept>
+	<string>
+	<tuple>
+	<vector>
+

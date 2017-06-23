@@ -21,7 +21,7 @@
 #include "write_results.h"
 
 //-----------------------------------------------------------------------------
-void write_results( const std::string& outfilename, Estimate estimate, std::vector<Boomerang> results ) {
+void write_results( const std::string& outfilename, Results results ) {
 
    // Open the specified output file.
    std::ofstream outfile( outfilename );
