@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1498219764 source:c:\users\randal\google drive\projects\gimiwan\src\main.cpp
+1498307175 source:c:\users\randal\google drive\projects\gimiwan\src\main.cpp
 	<cstring>
 	<ctime>
 	<iostream>
@@ -10,35 +10,122 @@
 	"version.h"
 	"write_results.h"
 
-1498219983 c:\users\randal\google drive\projects\gimiwan\src\engine.h
+1498302609 c:\users\randal\google drive\projects\gimiwan\src\engine.h
 	<stdexcept>
 	<tuple>
 	<vector>
 	"matrix.h"
 	"read_data.h"
 
-1498217548 c:\users\randal\google drive\projects\gimiwan\src\matrix.h
+1498301172 c:\users\randal\google drive\projects\gimiwan\src\matrix.h
 	<iostream>
 	<vector>
 
-1498217548 c:\users\randal\google drive\projects\gimiwan\src\read_data.h
+1498301172 c:\users\randal\google drive\projects\gimiwan\src\read_data.h
 	<stdexcept>
 	<string>
 	<tuple>
 	<vector>
 
-1498217548 c:\users\randal\google drive\projects\gimiwan\src\now.h
+1498301172 c:\users\randal\google drive\projects\gimiwan\src\now.h
 	<string>
 
-1498217548 c:\users\randal\google drive\projects\gimiwan\src\numerical_constants.h
+1498301172 c:\users\randal\google drive\projects\gimiwan\src\numerical_constants.h
 	<limits>
 
-1498217548 c:\users\randal\google drive\projects\gimiwan\src\version.h
+1498301172 c:\users\randal\google drive\projects\gimiwan\src\version.h
 	<string>
 
-1498217548 c:\users\randal\google drive\projects\gimiwan\src\write_results.h
+1498301172 c:\users\randal\google drive\projects\gimiwan\src\write_results.h
 	<stdexcept>
 	<string>
 	<tuple>
 	<vector>
+
+1498307089 source:c:\users\randal\google drive\projects\gimiwan\src\engine.cpp
+	<cassert>
+	<iomanip>
+	<math.h>
+	<numeric>
+	<sstream>
+	"engine.h"
+	"linear_systems.h"
+	"numerical_constants.h"
+	"special_functions.h"
+
+1498301172 c:\users\randal\google drive\projects\gimiwan\src\linear_systems.h
+	"matrix.h"
+
+1498301172 c:\users\randal\google drive\projects\gimiwan\src\special_functions.h
+	<iostream>
+
+1498301172 source:c:\users\randal\google drive\projects\gimiwan\src\linear_systems.cpp
+	"linear_systems.h"
+	<cassert>
+	<cmath>
+	"sum_product-inl.h"
+
+1498301172 c:\users\randal\google drive\projects\gimiwan\src\sum_product-inl.h
+
+1498301172 source:c:\users\randal\google drive\projects\gimiwan\src\matrix.cpp
+	<algorithm>
+	<cassert>
+	<cmath>
+	<cstring>
+	<iomanip>
+	<iostream>
+	<numeric>
+	<sstream>
+	<vector>
+	"matrix.h"
+	"sum_product-inl.h"
+
+1498301172 source:c:\users\randal\google drive\projects\gimiwan\src\now.cpp
+	<ctime>
+	<string>
+	"now.h"
+
+1498301172 source:c:\users\randal\google drive\projects\gimiwan\src\read_data.cpp
+	<algorithm>
+	<fstream>
+	<sstream>
+	"../include/csv.h"
+	"numerical_constants.h"
+	"read_data.h"
+
+1497461280 c:\users\randal\google drive\projects\gimiwan\include\csv.h
+	<vector>
+	<string>
+	<cstring>
+	<algorithm>
+	<utility>
+	<cstdio>
+	<exception>
+	<mutex>
+	<thread>
+	<condition_variable>
+	<memory>
+	<cassert>
+	<cerrno>
+	<istream>
+
+1498301172 source:c:\users\randal\google drive\projects\gimiwan\src\special_functions.cpp
+	<cassert>
+	<cmath>
+	"numerical_constants.h"
+	"special_functions.h"
+
+1498306469 source:c:\users\randal\google drive\projects\gimiwan\src\version.cpp
+	<iostream>
+	"version.h"
+
+1498304039 source:c:\users\randal\google drive\projects\gimiwan\src\write_results.cpp
+	<algorithm>
+	<fstream>
+	<iomanip>
+	<sstream>
+	"engine.h"
+	"matrix.h"
+	"numerical_constants.h"
+	"write_results.h"
 

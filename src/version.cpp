@@ -9,14 +9,14 @@
 //    University of Minnesota
 //
 // version:
-//    23 June 2017
+//    24 June 2017
 //=============================================================================
 #include <iostream>
 
 #include "version.h"
 
 namespace {
-const char* VERSION = "23 June 2017 [Beta]";
+const char* VERSION = "24 June 2017 [Beta]";
 }
 
 //-----------------------------------------------------------------------------
@@ -33,9 +33,13 @@ void Banner( std::ostream& ost) {
 //-----------------------------------------------------------------------------
 void Help() {
    Version();
-   std::cout << "   Identify influential observation head data using a boomerang approach "     << std::endl;
-   std::cout << "   and the quadratic discharge potential model. "                              << std::endl;
+   std::cout << "   Compute the expected values and standard deviations of the regional "       << std::endl;
+   std::cout << "   uniform recharge, the magnitude of the regional uniform flow, and the "     << std::endl;
+   std::cout << "   direction of the regional uniform flow for ranges of aquifer hydraulic "    << std::endl;
+   std::cout << "   conductivities and aquifer thicknesses, using the quadratic discharge "     << std::endl;
+   std::cout << "   potential model and observed heads. "                                       << std::endl;
    std::cout                                                                                    << std::endl;
+
 /*
    std::cout << "Method: "                                                                      << std::endl;
    std::cout << "   With the boomerang approach we march through our set of N observation "     << std::endl;
@@ -147,6 +151,7 @@ void Help() {
    std::cout << "   A influence value that is less than -2 or greater than +2 is significant."  << std::endl;
    std::cout << "   See Belsey et al. (1980), Section 2.1, p. 27-29. "                          << std::endl;
    std::cout                                                                                    << std::endl;
+*/
 
    Usage();
    std::cout << "Arguments: "                                                                   << std::endl;
@@ -158,11 +163,20 @@ void Help() {
    std::cout << "                   location at which the magnitude and direction of the "      << std::endl;
    std::cout << "                   regional uniform flow are computed. "                       << std::endl;
    std::cout                                                                                    << std::endl;
-   std::cout << "   <conductivity>  The hydraulic conductivity [L/T] of the aquifer. "          << std::endl;
+   std::cout << "   <k_alpha>       The log-mean of the aquifer hydraulic conductivity  "       << std::endl;
+   std::cout << "                   [ln(L/T)]. "                                                << std::endl;
    std::cout                                                                                    << std::endl;
-   std::cout << "   <thickness>     The thickness of the aquifer. Where the head is greater "   << std::endl;
-   std::cout << "                   the thickness the model is confined. Where the head is "    << std::endl;
-   std::cout << "                   less than the thickness the model is unconfined. "          << std::endl;
+   std::cout << "   <k_beta>        The log-standard deviation of the aquifer hydraulic "       << std::endl;
+   std::cout << "                   conductivity [ln(L/T)]. "                                   << std::endl;
+   std::cout                                                                                    << std::endl;
+   std::cout << "   <k_count>       The number of k set-points to use in the computations. "    << std::endl;
+   std::cout                                                                                    << std::endl;
+   std::cout << "   <h_alpha>       The log-mean of the aquifer thickness [ln(L)]."             << std::endl;
+   std::cout                                                                                    << std::endl;
+   std::cout << "   <h_beta>        The log-standard deviation of the aquifer thickness "       << std::endl;
+   std::cout << "                   [ln(L)]. "                                                  << std::endl;
+   std::cout                                                                                    << std::endl;
+   std::cout << "   <h_count>       The number of h set-points to use in the computations. "    << std::endl;
    std::cout                                                                                    << std::endl;
    std::cout << "   <radius>        The radius [L] of the buffer circle around of each "        << std::endl;
    std::cout << "                   pumping well. Any observation head data located within "    << std::endl;
@@ -176,15 +190,11 @@ void Help() {
    std::cout << "                   information and the .csv file extension) containing the "   << std::endl;
    std::cout << "                   well data. (See below for details.) "                       << std::endl;
    std::cout                                                                                    << std::endl;
-   std::cout << "   <output file>   The name of the file (including any necessary path "        << std::endl;
-   std::cout << "                   information and the file extension) where Nagadan will "    << std::endl;
-   std::cout << "                   write all of the program results. If the specified file "   << std::endl;
-   std::cout << "                   already exists, it will overwritten without warning. "      << std::endl;
-   std::cout << "                   (See below for details.) "                                  << std::endl;
+   std::cout << "   <output root>   The root filename of the output file. "                     << std::endl;
    std::cout                                                                                    << std::endl;
 
    std::cout << "Example: "                                                                     << std::endl;
-   std::cout << "   Nagadan 2250 -2250 10 10 100 my_obs.csv my_wells.csv my_output.csv"         << std::endl;
+   std::cout << "   Gimiwan 100 200 2.2 0.2 10  2.3 0.10 10 100 obs.csv wells.csv results "     << std::endl;
    std::cout                                                                                    << std::endl;
 
    std::cout << "<obs file>: "                                                                  << std::endl;
@@ -252,6 +262,8 @@ void Help() {
    std::cout                                                                                    << std::endl;
 
    std::cout << "<output file>:"                                                                << std::endl;
+   std::cout << "   All of the program results go to size output files. "                       << std::endl;
+/*
    std::cout << "   All of the program results go to the <output file>. The <output file> "     << std::endl;
    std::cout << "   is written in a valid .csv format, using a single comma as the field "      << std::endl;
    std::cout << "   the field delimiter."                                                       << std::endl;
@@ -293,6 +305,7 @@ void Help() {
    std::cout << "   If an observation is not active (i.e. the observation location falls "      << std::endl;
    std::cout << "   inside the buffer circle of one or more pumping well) only the first "      << std::endl;
    std::cout << "   three field (<ID>, <x>, <y>) are filled. "                                  << std::endl;
+*/
    std::cout                                                                                    << std::endl;
 
    std::cout << "Notes: "                                                                       << std::endl;
@@ -301,12 +314,11 @@ void Help() {
    std::cout << "      at least 10 unique observation locations remaining after excluding "     << std::endl;
    std::cout << "      all of the observations within any pumping well's buffer circle. "       << std::endl;
    std::cout                                                                                    << std::endl;
-   std::cout << "   o  The project name 'Nagadan' is the Ojibwe word for the inanimate "        << std::endl;
-   std::cout << "      transitive verb 'leave it behind'. See [http://ojibwe.lib.umn.edu]. "    << std::endl;
-   std::cout << "      This name seems appropriate for a program using a boomerang approach "   << std::endl;
-   std::cout << "      to identify influential data."                                           << std::endl;
+   std::cout << "   o  The project name 'Gimiwan' is the Ojibwe word for the inanimate "        << std::endl;
+   std::cout << "      intransitive verb 'it rains'. See [http://ojibwe.lib.umn.edu]. "         << std::endl;
    std::cout                                                                                    << std::endl;
 
+/*
    std::cout << "Reference: " << std::endl;
    std::cout << "   David A. Belsey, Edwin Kuh, and Roy E. Welsch, 1980, 'Regression "          << std::endl;
    std::cout << "   Diagnostics: Identifying Influential Data and Sources of Collinearity', "   << std::endl;

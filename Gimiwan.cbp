@@ -11,6 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="355731 5091141 2.23723 0.2462 10  2.2976 0.10 10 100 .\data\LongPrairie_obs.csv .\data\LongPrairie_wells.csv .\data\LongPrairie" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
@@ -20,12 +21,16 @@
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="355731 5091141 2.23723 0.2462 10  2.2976 0.10 10 100 .\data\LongPrairie_obs.csv .\data\LongPrairie_wells.csv .\data\LongPrairie" />
 				<Compiler>
 					<Add option="-O2" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
 				</Linker>
+				<ExtraCommands>
+					<Add after='cmd /c &quot;copy .\bin\Release\Gimiwan.exe .&quot;' />
+				</ExtraCommands>
 			</Target>
 			<Target title="Test">
 				<Option output="bin/Test/test_Gimiwan" prefix_auto="1" extension_auto="1" />
@@ -33,15 +38,16 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-O2" />
 					<Add option="-pedantic" />
 					<Add option="-Wextra" />
 					<Add option="-Wall" />
 					<Add option="-std=c++0x" />
 					<Add option="-m64" />
-					<Add option="-g" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
+					<Add option="-static" />
 				</Linker>
 			</Target>
 		</Build>

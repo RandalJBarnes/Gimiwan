@@ -10,7 +10,7 @@
 //    University of Minnesota
 //
 // version:
-//    23 June 2017
+//    24 June 2017
 //=============================================================================
 #include <cassert>
 #include <iomanip>
@@ -25,8 +25,8 @@
 
 //=============================================================================
 Results::Results() :
-   k_count(0),
-   h_count(0),
+   k(),
+   h(),
    R_ev(),
    R_sd(),
    M_ev(),
@@ -36,8 +36,8 @@ Results::Results() :
 }
 
 Results::Results( int k_count, int h_count ) :
-   k_count(k_count),
-   h_count(h_count),
+   k(k_count),
+   h(h_count),
    R_ev(k_count, h_count),
    R_sd(k_count, h_count),
    M_ev(k_count, h_count),
@@ -298,6 +298,10 @@ Results Engine(
          active_obs[mm++] = obs[m];
       }
    }
+   std::cout << active_obs.size() << " active observation data records." << std::endl;
+
+   // Initialize the results.
+   Results results(k_count, h_count);
 
    // Compute the set-points for both k and h. Each set-point is at the center
    // of an interval containing equal probability. For example, if n = 10 the
@@ -309,16 +313,16 @@ Results Engine(
       double p = 1.0/double(2.0*k_count) + double(i)/double(k_count);
       k[i] = exp(k_alpha + k_beta*GaussianCDFInv(p));
    }
+   results.k = k;
 
    std::vector<double> h(h_count);
    for (int j = 0; j < h_count; ++j ) {
       double p = 1.0/double(2.0*h_count) + double(j)/double(h_count);
       h[j] = exp(h_alpha + h_beta*GaussianCDFInv(p));
    }
+   results.h = h;
 
    // Fill the results.
-   Results results(k_count, h_count);
-
    for (int i = 0; i < k_count; ++i) {
       for (int j = 0; j < h_count; ++j) {
 

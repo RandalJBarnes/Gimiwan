@@ -7,7 +7,7 @@
 //    University of Minnesota
 //
 // version:
-//    23 June 2017
+//    24 June 2017
 //=============================================================================
 #include <utility>
 
@@ -214,7 +214,7 @@ namespace{
       std::fill(is_active.begin(), is_active.end(), 1);
 
       Matrix P_ev, P_cov;
-      std::tie(P_ev, P_cov) = FitQuadraticModel(X, Vinv, Y, is_active);
+      std::tie(P_ev, P_cov) = FitQuadraticModel(X, Vinv, Y);
 
       static const double P_ev_data[] = {
         -7.20476189326098e-05,

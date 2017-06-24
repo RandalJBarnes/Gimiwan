@@ -14,7 +14,7 @@
 //    University of Minnesota
 //
 // version:
-//    23 June 2017
+//    24 June 2017
 //=============================================================================
 #ifndef NUMERICAL_CONSTANTS_H
 #define NUMERICAL_CONSTANTS_H

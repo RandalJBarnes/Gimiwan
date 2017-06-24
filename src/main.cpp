@@ -9,7 +9,7 @@
 //    University of Minnesota
 //
 // version:
-//    23 June 2017
+//    24 June 2017
 //=============================================================================
 #include <cstring>
 #include <ctime>
@@ -158,7 +158,7 @@ int main(int argc, char* argv[]) {
    // Write out the results to the specified output data file.
    try {
       write_results( argv[12], results );
-      std::cout << "Output files <" << argv[12] << "> created. " << std::endl;
+      std::cout << "Six output files with root name <" << argv[12] << "> created. " << std::endl;
    }
    catch (InvalidOutputFile& e) {
       std::cerr << e.what() << std::endl;

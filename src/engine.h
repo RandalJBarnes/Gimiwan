@@ -7,7 +7,7 @@
 //    University of Minnesota
 //
 // version:
-//    23 June 2017
+//    24 June 2017
 //=============================================================================
 #ifndef ENGINE_H
 #define ENGINE_H
@@ -36,8 +36,8 @@ class CholeskyDecompositionFailed: public std::runtime_error {
 //=============================================================================
 class Results {
    public:
-      int k_count;
-      int h_count;
+      std::vector<double> k;
+      std::vector<double> h;
 
       Matrix R_ev;
       Matrix R_sd;
