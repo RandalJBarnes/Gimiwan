@@ -30,8 +30,8 @@ namespace{
    //--------------------------------------------------------------------------
    bool TestSetupQuadraticModel()
    {
-      double xfocus = 2250;
-      double yfocus = -2250;
+      double xo = 2250;
+      double yo = -2250;
 
       double conductivity = 10;
       double thickness = 10;
@@ -69,7 +69,7 @@ namespace{
       };
 
       Matrix X, Vinv, Y;
-      std::tie(X, Vinv, Y) = SetupQuadraticModel(xfocus, yfocus, conductivity, thickness, obs, wells);
+      std::tie(X, Vinv, Y) = SetupQuadraticModel(xo, yo, conductivity, thickness, obs, wells);
 
       static const double X_data[] = {
         1562500.0,     1562500.0,    -1562500.0,       -1250.0,        1250.0,           1.0,
@@ -291,97 +291,6 @@ namespace{
       flag &= CHECK( isClose(D_sd, D_sd_true, TOLERANCE) );
       return flag;
    }
-
-   //--------------------------------------------------------------------------
-   // TestEngine
-   //
-   //    This is simply an example problem.  The "correct" solution was
-   //    computed using parallel Matlab code.
-   //--------------------------------------------------------------------------
-   bool TestEngine() {
-
-      double xfocus = 2250;
-      double yfocus = -2250;
-
-      double conductivity = 10;
-      double thickness = 10;
-
-      double buffer_radius = 100;
-
-      std::vector<ObsRecord> obs = {
-         ObsRecord{"01",1000,-1000,100,1},
-         ObsRecord{"02",1000,-1500,105,1},
-         ObsRecord{"03",1000,-2000,110,1},
-         ObsRecord{"04",1000,-2500,115,1},
-         ObsRecord{"05",1000,-3000,120,1},
-         ObsRecord{"06",1500,-1000,95,1},
-         ObsRecord{"07",1500,-1500,100,1},
-         ObsRecord{"08",1500,-2000,105,1},
-         ObsRecord{"09",1500,-2500,110,1},
-         ObsRecord{"10",1500,-3000,115,1},
-         ObsRecord{"11",2000,-1000,90,1},
-         ObsRecord{"12",2000,-1500,95,1},
-         ObsRecord{"13",2000,-2000,100,1},
-         ObsRecord{"14",2000,-2500,105,1},
-         ObsRecord{"15",2000,-3000,110,1},
-         ObsRecord{"16",2500,-1000,85,1},
-         ObsRecord{"17",2500,-1500,90,1},
-         ObsRecord{"18",2500,-2000,95,1},
-         ObsRecord{"19",2500,-2500,100,1},
-         ObsRecord{"20",2500,-3000,105,1},
-         ObsRecord{"21",3000,-1000,80,1},
-         ObsRecord{"22",3000,-1500,85,1},
-         ObsRecord{"23",3000,-2000,90,1},
-         ObsRecord{"24",3000,-2500,95,1},
-         ObsRecord{"25",3000,-3000,100,1}
-      };
-
-      std::vector<WellRecord> wells = {
-         WellRecord{"12345",2250,-2250,0.25,750}
-      };
-
-      // All data.
-      double recharge_ev  = 2.881904757304405e-04;
-      double recharge_sd  = 1.352246807565627e-04;
-
-      double magnitude_ev = 1.414793607778156;
-      double magnitude_sd = 0.037032897448337;
-
-      double direction_ev = 0.779515695353749;
-      double direction_sd = 0.028030048721058;
-
-      // Excluding the last obs.
-      double recharge_ev_last  = 2.774442471611071e-04;
-      double magnitude_ev_last = 1.415193300832738;
-      double direction_ev_last = 0.783680402400208;
-
-      double influence_recharge_last  = -0.397347159897507;
-      double influence_magnitude_last =  0.053964593931656;
-      double influence_direction_last =  0.742900429447129;
-
-      Estimate estimate;
-      std::vector<Boomerang> results;
-      std::tie(estimate, results) = Engine(xfocus, yfocus, conductivity, thickness, buffer_radius, obs, wells);
-
-      bool flag = true;
-      flag &= CHECK( isClose(estimate.recharge_ev,  recharge_ev,   TOLERANCE) );
-      flag &= CHECK( isClose(estimate.recharge_sd,  recharge_sd,   TOLERANCE) );
-
-      flag &= CHECK( isClose(estimate.magnitude_ev, magnitude_ev,  TOLERANCE) );
-      flag &= CHECK( isClose(estimate.magnitude_sd, magnitude_sd,  TOLERANCE) );
-
-      flag &= CHECK( isClose(estimate.direction_ev, direction_ev,  TOLERANCE) );
-      flag &= CHECK( isClose(estimate.direction_sd, direction_sd,  TOLERANCE) );
-
-      flag &= CHECK( isClose(results[24].recharge,  recharge_ev_last,   TOLERANCE) );
-      flag &= CHECK( isClose(results[24].magnitude, magnitude_ev_last,  TOLERANCE) );
-      flag &= CHECK( isClose(results[24].direction, direction_ev_last,  TOLERANCE) );
-
-      flag &= CHECK( isClose(results[24].influence_recharge,  influence_recharge_last,  TOLERANCE) );
-      flag &= CHECK( isClose(results[24].influence_magnitude, influence_magnitude_last, TOLERANCE) );
-      flag &= CHECK( isClose(results[24].influence_direction, influence_direction_last, TOLERANCE) );
-      return flag;
-   }
 }
 
 //-----------------------------------------------------------------------------
@@ -395,7 +304,6 @@ std::pair<int,int> test_Engine()
    TALLY( TestSetupQuadraticModel() );
    TALLY( TestFitQuadraticModel() );
    TALLY( TestComputeGeohydrologyStatistics() );
-   TALLY( TestEngine() );
 
    return std::make_pair( nsucc, nfail );
 }
