@@ -1,6 +1,7 @@
 # Gimiwan
-   Compute the expected values and standard deviations of the regional uniform recharge, the magnitude of the regional uniform flow, and the direction of the regional uniform flow for ranges of aquifer hydraulic conductivities and aquifer thicknesses, using the quadratic discharge potential model and observed heads.
-
+   For ranges of conductivities and thicknesses, compute the expected values and standard deviations of the regional uniform recharge, the magnitude of the regional uniform flow, and the direction of the regional uniform flow, using the quadratic discharge potential model and observed heads. 
+   
+   
 ## Usage:
    `Gimiwan <xo> <yo> <k alpha> <k beta> <k count> <h alpha> <h beta> <h count> <radius> <obs file> <wells file> <output root>`  
    `Gimiwan --help`  

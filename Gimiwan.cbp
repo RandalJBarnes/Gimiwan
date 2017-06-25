@@ -56,7 +56,6 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="src/engine.cpp" />
-		<Unit filename="src/engine.cpp.save-failed" />
 		<Unit filename="src/engine.h" />
 		<Unit filename="src/linear_systems.cpp" />
 		<Unit filename="src/linear_systems.h" />
