@@ -7,7 +7,7 @@
 //    University of Minnesota
 //
 // version:
-//    25 June 2017
+//    26 June 2017
 //=============================================================================
 #include <iostream>
 
@@ -43,7 +43,7 @@ int main()
    nfail += counts.second;
 
    if (nfail > 0)
-      std::cerr << "NAGADAN TESTS: nsucc = " << nsucc << '\t' << "nfail = " << nfail << std::endl;
+      std::cerr << "GIMIWAN TESTS: nsucc = " << nsucc << '\t' << "nfail = " << nfail << std::endl;
    else
-      std::cerr << "NAGADAN TESTS: All " << nsucc << " tests passed." << std::endl;
+      std::cerr << "GIMIWAN TESTS: All " << nsucc << " tests passed." << std::endl;
 }

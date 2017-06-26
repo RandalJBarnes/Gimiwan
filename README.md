@@ -1,6 +1,5 @@
 # Gimiwan
-   For ranges of conductivities and thicknesses, compute the expected values and standard deviations of the regional uniform recharge, the magnitude of the regional uniform flow, and the direction of the regional uniform flow, using the quadratic discharge potential model and observed heads. 
-   
+   Using the quadratic discharge potential model and observed heads, compute the expected values and standard deviations of the regional uniform recharge, the magnitude of the regional uniform flow, and the direction of the regional uniform flow over ranges of conductivities and thicknesses.
    
 ## Usage:
    `Gimiwan <xo> <yo> <k alpha> <k beta> <k count> <h alpha> <h beta> <h count> <radius> <obs file> <wells file> <output root>`  
@@ -8,5 +7,4 @@
    `Gimiwan --version`  
 
 ## Origin of the Project Name
-
-The project name __Gimiwan__ is the Ojibwe word for the inanimate intransitive verb "it rains". See [http://ojibwe.lib.umn.edu](http://ojibwe.lib.umn.edu/search?utf8=%E2%9C%93&q=gimiwan&commit=Search&type=ojibwe). 
+   The project name __Gimiwan__ is the Ojibwe word for the inanimate intransitive verb "it rains". See [http://ojibwe.lib.umn.edu](http://ojibwe.lib.umn.edu/search?utf8=%E2%9C%93&q=gimiwan&commit=Search&type=ojibwe). 

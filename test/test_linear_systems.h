@@ -7,7 +7,7 @@
 //    University of Minnesota
 //
 // version:
-//    25 June 2017
+//    26 June 2017
 //=============================================================================
 #ifndef TEST_LINEAR_SYSTEMS_H
 #define TEST_LINEAR_SYSTEMS_H

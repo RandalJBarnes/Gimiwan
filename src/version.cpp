@@ -9,25 +9,26 @@
 //    University of Minnesota
 //
 // version:
-//    25 June 2017
+//    26 June 2017
 //=============================================================================
 #include <iostream>
 
 #include "version.h"
 
 namespace {
-const char* VERSION = "25 June 2017 [Beta]";
+const char* VERSION = "26 June 2017 [Beta]";
 }
 
 //-----------------------------------------------------------------------------
 void Banner( std::ostream& ost) {
-   ost                                                    << std::endl;
-   ost << "--------------------------------------------"  << std::endl;
-   ost << "Gimiwan (" << VERSION << ")"                   << std::endl;
-   ost                                                    << std::endl;
-   ost << "R. Barnes, University of Minnesota          "  << std::endl;
-   ost << "R. Soule,  Minnesota Department of Health   "  << std::endl;
-   ost << "--------------------------------------------"  << std::endl;
+   ost <<
+      "-------------------------------------------- \n"
+      "Gimiwan (" << VERSION << ") \n"
+      "\n"
+      "R. Barnes, University of Minnesota \n"
+      "R. Soule,  Minnesota Department of Health \n"
+      "-------------------------------------------- \n"
+   << std::endl;
 }
 
 //-----------------------------------------------------------------------------
@@ -35,36 +36,36 @@ void Help() {
    Version();
 
    std::cout <<
-      "   For ranges of conductivities and thicknesses, compute the expected values \n"
-      "   and standard deviations of the regional uniform recharge, the magnitude of \n"
-      "   the regional uniform flow, and the direction of the regional uniform flow, \n"
-      "   using the quadratic discharge potential model and observed heads. \n"
+      "   Using the quadratic discharge potential model and observed heads, compute \n"
+      "   the expected values and standard deviations of the regional uniform recharge, \n"
+      "   the magnitude of the regional uniform flow, and the direction of the regional \n"
+      "   uniform flow over ranges of conductivities and thicknesses. \n"
    << std::endl;
 
    Usage();
 
    std::cout <<
       "Arguments: \n"
-      "   <xo>            The x-coordinate [L] of model origin. (xo,yo) is the \n"
-      "                   location at which the magnitude and direction of the \n"
-      "                   regional uniform flow are computed. \n"
+      "   <xo>            The x-coordinate [L] of model origin. (xo,yo) is the location \n"
+      "                   at which the magnitudes and directions of the regional uniform \n"
+      "                   flow are computed. \n"
       "\n"
-      "   <yo>            The y-coordinate [L] of model origin. (xo,yo) is the \n"
-      "                   location at which the magnitude and direction of the \n"
-      "                   regional uniform flow are computed. \n"
+      "   <yo>            The y-coordinate [L] of model origin. (xo,yo) is the location \n"
+      "                   at which the magnitudes and directions of the regional uniform \n"
+      "                   flow are computed. \n"
       "\n"
       "   <k_alpha>       The log-mean of the aquifer hydraulic conductivity [ln(L/T)]. \n"
       "\n"
       "   <k_beta>        The log-standard deviation of the aquifer hydraulic \n"
       "                   conductivity [ln(L/T)]. \n"
       "\n"
-      "   <k_count>       The number of equal probability intervals for k. \n"
+      "   <k_count>       The number of equal probability intervals for conductivity. \n"
       "\n"
       "   <h_alpha>       The log-mean of the aquifer thickness [ln(L)]. \n"
       "\n"
       "   <h_beta>        The log-standard deviation of the aquifer thickness [ln(L)]. \n"
       "\n"
-      "   <h_count>       The number of equal probability intervals for h. \n"
+      "   <h_count>       The number of equal probability intervals for thickness. \n"
       "\n"
       "   <radius>        The radius [L] of the buffer circle around of each pumping \n"
       "                   well. Any observations located within one or more well's \n"
