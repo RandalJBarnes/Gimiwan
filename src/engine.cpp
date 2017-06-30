@@ -10,7 +10,7 @@
 //    University of Minnesota
 //
 // version:
-//    26 June 2017
+//    30 June 2017
 //=============================================================================
 #include <cassert>
 #include <iomanip>
@@ -329,7 +329,7 @@ Results Engine(
          // Setup the regression for the quadratic discharge potential model
          // using the current k and h, and only the active obs.
          Matrix X, Vinv, Y;
-         std::tie(X, Vinv, Y) = SetupQuadraticModel(xo, yo, k[i], h[i], active_obs, wells);
+         std::tie(X, Vinv, Y) = SetupQuadraticModel(xo, yo, k[i], h[j], active_obs, wells);
 
          // Fit the parameters using all of the active observations.
          Matrix P_ev, P_cov;

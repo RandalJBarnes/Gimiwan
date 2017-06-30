@@ -9,14 +9,14 @@
 //    University of Minnesota
 //
 // version:
-//    26 June 2017
+//    30 June 2017
 //=============================================================================
 #include <iostream>
 
 #include "version.h"
 
 namespace {
-const char* VERSION = "26 June 2017 [Beta]";
+const char* VERSION = "30 June 2017 [RC1]";
 }
 
 //-----------------------------------------------------------------------------

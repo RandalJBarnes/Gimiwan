@@ -7,7 +7,7 @@
 //    University of Minnesota
 //
 // version:
-//    26 June 2017
+//    30 June 2017
 //=============================================================================
 #ifndef READ_DATA_H
 #define READ_DATA_H

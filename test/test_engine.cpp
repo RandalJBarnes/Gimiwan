@@ -7,13 +7,14 @@
 //    University of Minnesota
 //
 // version:
-//    26 June 2017
+//    30 June 2017
 //=============================================================================
 #include <utility>
 
 #include "test_engine.h"
 #include "unit_test.h"
 #include "..\src\engine.h"
+#include "..\src\numerical_constants.h"
 
 //-----------------------------------------------------------------------------
 // Hide all of the testing details inside an unnamed namespace. This allows me
@@ -293,6 +294,119 @@ namespace{
    }
 }
 
+   //--------------------------------------------------------------------------
+   bool TestEngine() {
+      double xo = 2250.0;
+      double yo = -2250.0;
+
+      double k_alpha = 2.0;
+      double k_beta  = 0.5;
+      int    k_count = 3;
+
+      double h_alpha = 2.0;
+      double h_beta  = 0.1;
+      int    h_count = 3;
+
+      double radius  = 100;
+
+      std::vector<ObsRecord> obs = {
+         ObsRecord{"01",1000,-1000,100,1},
+         ObsRecord{"02",1000,-1500,105,1},
+         ObsRecord{"03",1000,-2000,110,1},
+         ObsRecord{"04",1000,-2500,115,1},
+         ObsRecord{"05",1000,-3000,120,1},
+         ObsRecord{"06",1500,-1000,95,1},
+         ObsRecord{"07",1500,-1500,100,1},
+         ObsRecord{"08",1500,-2000,105,1},
+         ObsRecord{"09",1500,-2500,110,1},
+         ObsRecord{"10",1500,-3000,115,1},
+         ObsRecord{"11",2000,-1000,90,1},
+         ObsRecord{"12",2000,-1500,95,1},
+         ObsRecord{"13",2000,-2000,100,1},
+         ObsRecord{"14",2000,-2500,105,1},
+         ObsRecord{"15",2000,-3000,110,1},
+         ObsRecord{"16",2500,-1000,85,1},
+         ObsRecord{"17",2500,-1500,90,1},
+         ObsRecord{"18",2500,-2000,95,1},
+         ObsRecord{"19",2500,-2500,100,1},
+         ObsRecord{"20",2500,-3000,105,1},
+         ObsRecord{"21",3000,-1000,80,1},
+         ObsRecord{"22",3000,-1500,85,1},
+         ObsRecord{"23",3000,-2000,90,1},
+         ObsRecord{"24",3000,-2500,95,1},
+         ObsRecord{"25",3000,-3000,100,1}
+      };
+
+      std::vector<WellRecord> wells = {
+         WellRecord{"12345",2250,-2250,0.25,750}
+      };
+
+      Results results;
+      results = Engine(xo, yo, k_alpha, k_beta, k_count, h_alpha, h_beta, h_count, radius, obs, wells);
+
+      std::vector<double> k_true {4.555290100048275725, 7.389056098930650407, 11.98565817631804009};
+      std::vector<double> h_true {6.707711558370498039,7.389056098930650407,8.139609098875407511};
+
+      static const double R_ev_data[] = {
+         0.0002881904757304113536,0.0002881904757303977468,0.0002881904757304182382,
+         0.0002881904757304138472,0.0002881904757304025715,0.0002881904757304297308,
+         0.0002881904757303529151,0.000288190475730404252,0.0002881904757305247611
+      };
+      Matrix R_ev_true(3, 3, R_ev_data);
+
+      static const double R_sd_data[] = {
+         4.13186747658301519e-005,4.551567298644503483e-005,5.013898676930082576e-005,
+         6.702229694985912113e-005,7.383017408130831776e-005,8.132957020190223528e-005,
+         0.0001087156912435608498,0.0001197586292198651094,0.0001319232680082011529
+      };
+      Matrix R_sd_true(3, 3, R_sd_data);
+
+      static const double M_ev_data[] = {
+         0.4323708549893038877,0.4762739766631226002,0.5246380449909110455,
+         0.7012606794083517947,0.7724825830032123752,0.8509398260015376136,
+         1.137453009115591884,1.252985384350457698,1.380253654772955807
+      };
+      Matrix M_ev_true(3, 3, M_ev_data);
+
+      static const double M_sd_data[] = {
+         0.01131589086175638185,0.01246525798656599772,0.01373137902967830684,
+         0.01835500048726555408,0.02021939704323883272,0.02227317547543973889,
+         0.02977313446803655367,0.03279735686562526564,0.03612877067000193343
+      };
+      Matrix M_sd_true(3, 3, M_sd_data);
+
+
+      static const double D_ev_data[] = {
+         43.89708214499925987,43.9987604046996168,44.09106839369568576,
+         44.32000849194515268,44.38270538239297736,44.43962227912987828,
+         44.58077883328078173,44.61943400444664576,44.65452508481450167
+      };
+      Matrix D_ev_true(3, 3, D_ev_data);
+
+      Matrix D_ev_deg;
+      Multiply_aM(RAD_TO_DEG, results.D_ev, D_ev_deg);
+
+      static const double D_sd_data[] = {
+         1.605699349749284632,1.605758349955243469,1.605806975813463211,
+         1.605907296897844283,1.60592972843050541,1.605948214564432819,
+         1.605986350483248781,1.605994876979402575,1.606001903618260895
+      };
+      Matrix D_sd_true(3, 3, D_sd_data);
+
+      Matrix D_sd_deg;
+      Multiply_aM(RAD_TO_DEG, results.D_sd, D_sd_deg);
+
+      bool flag = true;
+      flag &= CHECK( isClose(results.R_ev, R_ev_true, TOLERANCE) );
+      flag &= CHECK( isClose(results.R_sd, R_sd_true, TOLERANCE) );
+      flag &= CHECK( isClose(results.M_ev, M_ev_true, TOLERANCE) );
+      flag &= CHECK( isClose(results.M_sd, M_sd_true, TOLERANCE) );
+      flag &= CHECK( isClose(D_ev_deg, D_ev_true, TOLERANCE) );
+      flag &= CHECK( isClose(D_sd_deg, D_sd_true, TOLERANCE) );
+      return flag;
+   }
+
+
 //-----------------------------------------------------------------------------
 // test_Engine
 //-----------------------------------------------------------------------------
@@ -304,6 +418,7 @@ std::pair<int,int> test_Engine()
    TALLY( TestSetupQuadraticModel() );
    TALLY( TestFitQuadraticModel() );
    TALLY( TestComputeGeohydrologyStatistics() );
+   TALLY( TestEngine() );
 
    return std::make_pair( nsucc, nfail );
 }
