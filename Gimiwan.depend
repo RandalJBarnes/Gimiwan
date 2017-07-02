@@ -17,7 +17,7 @@
 	"matrix.h"
 	"read_data.h"
 
-1498858443 c:\users\randal\google drive\projects\gimiwan\src\matrix.h
+1498994339 c:\users\randal\google drive\projects\gimiwan\src\matrix.h
 	<iostream>
 	<vector>
 
@@ -53,13 +53,13 @@
 	"numerical_constants.h"
 	"special_functions.h"
 
-1498858443 c:\users\randal\google drive\projects\gimiwan\src\linear_systems.h
+1498994784 c:\users\randal\google drive\projects\gimiwan\src\linear_systems.h
 	"matrix.h"
 
 1498858442 c:\users\randal\google drive\projects\gimiwan\src\special_functions.h
 	<iostream>
 
-1498858443 source:c:\users\randal\google drive\projects\gimiwan\src\linear_systems.cpp
+1498994842 source:c:\users\randal\google drive\projects\gimiwan\src\linear_systems.cpp
 	"linear_systems.h"
 	<cassert>
 	<cmath>
@@ -67,7 +67,7 @@
 
 1498858443 c:\users\randal\google drive\projects\gimiwan\src\sum_product-inl.h
 
-1498858443 source:c:\users\randal\google drive\projects\gimiwan\src\matrix.cpp
+1498994554 source:c:\users\randal\google drive\projects\gimiwan\src\matrix.cpp
 	<algorithm>
 	<cassert>
 	<cmath>
@@ -115,7 +115,7 @@
 	"numerical_constants.h"
 	"special_functions.h"
 
-1498858443 source:c:\users\randal\google drive\projects\gimiwan\src\version.cpp
+1498862733 source:c:\users\randal\google drive\projects\gimiwan\src\version.cpp
 	<iostream>
 	"version.h"
 
@@ -141,13 +141,13 @@
 
 1498858442 c:\users\randal\google drive\projects\gimiwan\test\unit_test.h
 
-1498858443 source:c:\users\randal\google drive\projects\gimiwan\test\test_linear_systems.cpp
+1498995112 source:c:\users\randal\google drive\projects\gimiwan\test\test_linear_systems.cpp
 	<utility>
 	"test_linear_systems.h"
 	"unit_test.h"
 	"..\src\linear_systems.h"
 
-1498858443 c:\users\randal\google drive\projects\gimiwan\test\test_linear_systems.h
+1498995102 c:\users\randal\google drive\projects\gimiwan\test\test_linear_systems.h
 	<utility>
 
 1498858443 source:c:\users\randal\google drive\projects\gimiwan\test\test_main.cpp
@@ -157,13 +157,13 @@
 	"test_matrix.h"
 	"test_special_functions.h"
 
-1498858443 c:\users\randal\google drive\projects\gimiwan\test\test_matrix.h
+1498995123 c:\users\randal\google drive\projects\gimiwan\test\test_matrix.h
 	<utility>
 
 1498858442 c:\users\randal\google drive\projects\gimiwan\test\test_special_functions.h
 	<utility>
 
-1498858443 source:c:\users\randal\google drive\projects\gimiwan\test\test_matrix.cpp
+1498994489 source:c:\users\randal\google drive\projects\gimiwan\test\test_matrix.cpp
 	<iomanip>
 	<utility>
 	"test_matrix.h"

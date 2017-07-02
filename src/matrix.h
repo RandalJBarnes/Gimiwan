@@ -7,7 +7,7 @@
 //    University of Minnesota
 //
 // version:
-//    30 June 2017
+//    2 July 2017
 //=============================================================================
 #ifndef MATRIX_H
 #define MATRIX_H
@@ -138,6 +138,7 @@ double QuadraticForm_MMM ( const Matrix& a, const Matrix& B, const Matrix& c ); 
 //=============================================================================
 // Matrix comparison
 //=============================================================================
+bool isSquare(const Matrix& A);
 bool isCongruent( const Matrix& A, const Matrix& B );
 bool isClose( const Matrix& A, const Matrix& B, double tol );
 

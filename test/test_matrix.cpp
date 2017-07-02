@@ -15,7 +15,7 @@
 //    University of Minnesota
 //
 // version:
-//    30 June 2017
+//    2 July 2017
 //=============================================================================
 #include <iomanip>
 #include <utility>
@@ -381,7 +381,7 @@ namespace{
       return CHECK( isClose(B, C, TOLERANCE) );
    }
 
-//--------------------------------------------------------------------------
+   //--------------------------------------------------------------------------
    // TestMatrixSliceRow
    //--------------------------------------------------------------------------
    bool TestMatrixSliceRow()
@@ -396,7 +396,7 @@ namespace{
 
       return CHECK( isClose(B, C, TOLERANCE) );
    }
-
+   
    //--------------------------------------------------------------------------
    // TestMatrixAdd_aM
    //--------------------------------------------------------------------------
@@ -531,10 +531,10 @@ namespace{
       Matrix D("4;3;2;1");
 
       bool flag = true;
-      flag &= CHECK( abs(DotProduct(A, A) - 30) < TOLERANCE );
-      flag &= CHECK( abs(DotProduct(A, B) - 30) < TOLERANCE );
-      flag &= CHECK( abs(DotProduct(A, C) - 20) < TOLERANCE );
-      flag &= CHECK( abs(DotProduct(A, D) - 20) < TOLERANCE );
+      flag &= CHECK( isClose(DotProduct(A, A), 30, TOLERANCE) );
+      flag &= CHECK( isClose(DotProduct(A, B), 30, TOLERANCE) );
+      flag &= CHECK( isClose(DotProduct(A, C), 20, TOLERANCE) );
+      flag &= CHECK( isClose(DotProduct(A, D), 20, TOLERANCE) );
       return flag;
    }
 
@@ -565,6 +565,23 @@ namespace{
 
       return CHECK( isClose(q, 552.0, TOLERANCE) );
    }
+
+   //--------------------------------------------------------------------------
+   // TestMatrixisSquare
+   //--------------------------------------------------------------------------
+   bool TestMatrixisSquare()
+   {
+      Matrix A("1,2,3;4,5,6;7,8,9");
+      Matrix B("1,2,3;4,5,6");
+      Matrix C;
+
+      bool flag = true;
+      flag &= CHECK( isSquare(A) );
+      flag &= CHECK( !isSquare(B) );
+      flag &= CHECK( !isSquare(C) );
+      return flag;
+   }
+
 
    //--------------------------------------------------------------------------
    // TestMatrixisCongruent
@@ -701,6 +718,7 @@ std::pair<int,int> test_Matrix()
    TALLY( TestDotProduct() );
    TALLY( TestMatrixQuadraticForm_MtMM() );
    TALLY( TestMatrixQuadraticForm_MMM() );
+   TALLY( TestMatrixisSquare() );
    TALLY( TestMatrixisCongruent() );
    TALLY( TestMatrixisClose() );
    TALLY( TestMatrixisRow() );

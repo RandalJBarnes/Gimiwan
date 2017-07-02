@@ -14,7 +14,7 @@
 //    University of Minnesota
 //
 // version:
-//    30 June 2017
+//    29 June 2017
 //=============================================================================
 #include "linear_systems.h"
 
@@ -23,8 +23,8 @@
 
 #include "sum_product-inl.h"
 
-namespace {
-double MIN_DIVISOR = 1e-12;
+namespace{
+   double MIN_DIVISOR = 1e-12;
 }
 
 //=============================================================================
@@ -59,9 +59,10 @@ double MIN_DIVISOR = 1e-12;
 // o  Golub, G.H., and Van Loan, C.F., 1996, MATRIX COMPUTATIONS, 3rd Edition,
 //    Johns Hopkins University Press, Baltimore, Maryland, 694 pp.
 //=============================================================================
-bool CholeskyDecomposition( const Matrix& A, Matrix& L ) {
+bool CholeskyDecomposition( const Matrix& A, Matrix& L )
+{
    // Validate the arguments.
-   assert( A.nRows() == A.nCols() );
+   assert(isSquare(A));
 
    // Define local constants.
    const int N = A.nRows();
@@ -82,10 +83,8 @@ bool CholeskyDecomposition( const Matrix& A, Matrix& L ) {
          L(j,k) = 0.0;
       }
    }
-
    return true;
 }
-
 
 //=============================================================================
 // CholeskySolve
@@ -122,7 +121,8 @@ bool CholeskyDecomposition( const Matrix& A, Matrix& L ) {
 //    Hopkins University Press, Baltimore, Maryland, 476 pp.
 //
 //=============================================================================
-void CholeskySolve( const Matrix& L, const Matrix& b, Matrix& x ) {
+void CholeskySolve( const Matrix& L, const Matrix& b, Matrix& x )
+{
    // Validate the arguments.
    assert( L.nRows() == L.nCols() );
    assert( b.nRows() == L.nRows() );
@@ -173,7 +173,8 @@ void CholeskySolve( const Matrix& L, const Matrix& b, Matrix& x ) {
 // o  Stewart, G., 1998, "Matrix Algorithms - Volume I: Basic Decompositions",
 //    SIAM, Philadelphia, 458pp., ISBN 0-89871-414-1.
 //=============================================================================
-void CholeskyInverse( const Matrix& L, Matrix& Ainv ) {
+void CholeskyInverse( const Matrix& L, Matrix& Ainv ) 
+{
    assert( L.nRows() > 0 );
    assert( L.nRows() == L.nCols() );
    const int N = L.nRows();
@@ -218,9 +219,9 @@ void CholeskyInverse( const Matrix& L, Matrix& Ainv ) {
 // o  Stewart, G., 1998, "Matrix Algorithms - Volume I: Basic Decompositions",
 //    SIAM, Philadelphia, 458pp., ISBN 0-89871-414-1.
 //=============================================================================
-bool RSPDInv( const Matrix& A, Matrix& Ainv ) {
-   assert( A.nRows() > 0 );
-   assert( A.nRows() == A.nCols() );
+bool RSPDInv( const Matrix& A, Matrix& Ainv )
+{
+   assert(isSquare(A));
    const int N = A.nRows();
 
    // Compute the Cholesky decomposition of "A", putting the result in "L".
@@ -316,7 +317,8 @@ bool RSPDInv( const Matrix& A, Matrix& Ainv ) {
 //    Edition), Johns Hopkins University Press, Baltimore Maryland,
 //    ISBN 0-8018-5414-8.
 //=============================================================================
-bool LeastSquaresSolve( const Matrix& A, const Matrix& B, Matrix& X ) {
+bool LeastSquaresSolve( const Matrix& A, const Matrix& B, Matrix& X )
+{
    assert(A.nRows() == B.nRows());
 
    // Setup the necessary dimension constants.
@@ -374,7 +376,6 @@ bool LeastSquaresSolve( const Matrix& A, const Matrix& B, Matrix& X ) {
       for (int p = 0; p < P; ++p)
          X(i,p) = (X(i,p) - SumProduct(N-i-1, R.Base(i,i+1), X.Base(i+1,p), X.nCols())) / R(i,i);
    }
-
    return true;
 }
 
@@ -396,7 +397,8 @@ bool LeastSquaresSolve( const Matrix& A, const Matrix& B, Matrix& X ) {
 //    C     (1xN) shift Matrix.
 //    D     (MxN) Matrix contraining the transofrmed rows (on exit).
 //=============================================================================
-void AffineTransformation( const Matrix& A, const Matrix& B, const Matrix& C, Matrix& D ) {
+void AffineTransformation( const Matrix& A, const Matrix& B, const Matrix& C, Matrix& D )
+{
    assert( A.nCols() == B.nRows() );
    assert( B.nRows() == B.nCols() );
    assert( C.nRows() == 1 );

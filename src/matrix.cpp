@@ -5,19 +5,13 @@
 //    matrix class is explicitly based on <double>. This matrix class is NOT
 //    a template.
 //
-// notes:
-// o  The Matrix class stores the data in row-major order:  e.g.
-//        1   2   3   4
-//        5   6   7   8
-//        9  10  11  12
-//
 // author:
 //    Dr. Randal J. Barnes
 //    Department of Civil, Environmental, and Geo- Engineering
 //    University of Minnesota
 //
 // version:
-//    30 June 2017
+//    2 July 2017
 //=============================================================================
 #include <algorithm>
 #include <cassert>
@@ -40,18 +34,20 @@
 // Null constructor.
 //-----------------------------------------------------------------------------
 Matrix::Matrix()
-   :  m_nRows( 0 ),
-      m_nCols( 0 ),
-      m_Data( nullptr ) {
+:  m_nRows( 0 ),
+   m_nCols( 0 ),
+   m_Data( nullptr ) 
+{
 }
 
 //-----------------------------------------------------------------------------
 // Copy constructor.
 //-----------------------------------------------------------------------------
 Matrix::Matrix( const Matrix& A )
-   :  m_nRows( 0 ),
-      m_nCols( 0 ),
-      m_Data( nullptr ) {
+:  m_nRows( 0 ),
+   m_nCols( 0 ),
+   m_Data( nullptr )
+{
    if ( A.nRows() > 0 && A.nCols() > 0 ) {
       m_nRows = A.nRows();
       m_nCols = A.nCols();
@@ -64,9 +60,10 @@ Matrix::Matrix( const Matrix& A )
 // constructor from an std:vector
 //-----------------------------------------------------------------------------
 Matrix::Matrix( const std::vector<double>v )
-   :  m_nRows( 0 ),
-      m_nCols( 0 ),
-      m_Data( nullptr ) {
+:  m_nRows( 0 ),
+   m_nCols( 0 ),
+   m_Data( nullptr )
+{
    if ( v.size() > 0 ) {
       m_nRows = v.size();
       m_nCols = 1;
@@ -81,9 +78,10 @@ Matrix::Matrix( const std::vector<double>v )
 // Dimensioned constructor, with zero fill.
 //-----------------------------------------------------------------------------
 Matrix::Matrix( int nrows, int ncols )
-   :  m_nRows( 0 ),
-      m_nCols( 0 ),
-      m_Data( nullptr ) {
+:  m_nRows( 0 ),
+   m_nCols( 0 ),
+   m_Data( nullptr )
+{
    assert( nrows >= 0 && ncols >= 0 );
 
    m_nRows = nrows;
@@ -96,9 +94,10 @@ Matrix::Matrix( int nrows, int ncols )
 // Constructor with scalar fill.
 //-----------------------------------------------------------------------------
 Matrix::Matrix( int nrows, int ncols, double a )
-   :  m_nRows( 0 ),
-      m_nCols( 0 ),
-      m_Data( nullptr ) {
+:  m_nRows( 0 ),
+   m_nCols( 0 ),
+   m_Data( nullptr )
+{
    assert( nrows >= 0 && ncols >= 0 );
 
    m_nRows = nrows;
@@ -114,9 +113,10 @@ Matrix::Matrix( int nrows, int ncols, double a )
 // Constructor with array fill.
 //-----------------------------------------------------------------------------
 Matrix::Matrix( int nrows, int ncols, const double* data )
-   :  m_nRows( 0 ),
-      m_nCols( 0 ),
-      m_Data( nullptr ) {
+:  m_nRows( 0 ),
+   m_nCols( 0 ),
+   m_Data( nullptr )
+{
    assert( nrows >= 0 && ncols >= 0 );
 
    m_nRows = nrows;
@@ -144,23 +144,26 @@ Matrix::Matrix( int nrows, int ncols, const double* data )
 //    Any token that cannot be interpreted as a valid double is set to zero.
 //-----------------------------------------------------------------------------
 Matrix::Matrix( const std::string& str )
-   :  m_nRows( 0 ),
-      m_nCols( 0 ),
-      m_Data( nullptr ) {
+:  m_nRows( 0 ),
+   m_nCols( 0 ),
+   m_Data( nullptr )
+{
    assert( str.find_first_not_of("-0123456789eE.,; \t") == std::string::npos );
 
    // Parse the string, storing the values in a vector of vectors.
    std::vector< std::vector< double > > rows;
 
    std::string::size_type beg_line = str.find_first_not_of(" \t", 0);
-   while (beg_line != std::string::npos) {
+   while (beg_line != std::string::npos)
+   {
       std::string::size_type end_line = str.find_first_of(";", beg_line);
       std::string line = str.substr(beg_line, end_line-beg_line);
 
       std::vector< double > row;
 
       std::string::size_type beg_token = line.find_first_not_of(" \t", 0);
-      while (beg_token != std::string::npos) {
+      while (beg_token != std::string::npos)
+      {
          std::string::size_type end_token = line.find_first_of(",", beg_token);
          std::string token = line.substr(beg_token, end_token-beg_token);
 
@@ -199,7 +202,8 @@ Matrix::Matrix( const std::string& str )
 //-----------------------------------------------------------------------------
 // Destructor.
 //-----------------------------------------------------------------------------
-Matrix::~Matrix() {
+Matrix::~Matrix()
+{
    delete [] m_Data;
 
    m_nRows = 0;
@@ -212,7 +216,8 @@ Matrix::~Matrix() {
 //
 //    The resized Matrix is filled with zeros.
 //-----------------------------------------------------------------------------
-void Matrix::Resize( int nrows, int ncols ) {
+void Matrix::Resize( int nrows, int ncols )
+{
    // Check the arguments.
    assert( nrows >= 0 && ncols >= 0 );
 
@@ -224,7 +229,8 @@ void Matrix::Resize( int nrows, int ncols ) {
          m_nRows = nrows;
          m_nCols = ncols;
          m_Data  = new double[ m_nRows*m_nCols ];
-      } else {
+      }
+      else {
          m_nRows = 0;
          m_nCols = 0;
          m_Data  = nullptr;
@@ -237,7 +243,8 @@ void Matrix::Resize( int nrows, int ncols ) {
 //-----------------------------------------------------------------------------
 // Assignment operator.
 //-----------------------------------------------------------------------------
-Matrix& Matrix::operator=( const Matrix& A ) {
+Matrix& Matrix::operator=( const Matrix& A )
+{
    // Check for self-assignment.
    if ( this == &A ) return *this;
 
@@ -254,7 +261,8 @@ Matrix& Matrix::operator=( const Matrix& A ) {
 //-----------------------------------------------------------------------------
 // Scalar assignment operator.
 //-----------------------------------------------------------------------------
-Matrix& Matrix::operator=( double a ) {
+Matrix& Matrix::operator=( double a )
+{
    for (int k = 0; k < m_nRows*m_nCols; ++k)
       m_Data[k] = a;
 
@@ -264,7 +272,8 @@ Matrix& Matrix::operator=( double a ) {
 //-----------------------------------------------------------------------------
 // Non-constant element access operator (put).
 //-----------------------------------------------------------------------------
-double& Matrix::operator()( int row, int col ) {
+double& Matrix::operator()( int row, int col )
+{
    assert( row >= 0 && row < m_nRows );
    assert( col >= 0 && col < m_nCols );
 
@@ -274,7 +283,8 @@ double& Matrix::operator()( int row, int col ) {
 //-----------------------------------------------------------------------------
 // Constant element access operator (get).
 //-----------------------------------------------------------------------------
-double Matrix::operator()( int row, int col ) const {
+double Matrix::operator()( int row, int col ) const
+{
    assert( row >= 0 && row < m_nRows );
    assert( col >= 0 && col < m_nCols );
 
@@ -284,28 +294,32 @@ double Matrix::operator()( int row, int col ) const {
 //-----------------------------------------------------------------------------
 // Number of rows.
 //-----------------------------------------------------------------------------
-int Matrix::nRows() const {
+int Matrix::nRows() const
+{
    return m_nRows;
 }
 
 //-----------------------------------------------------------------------------
 // Number of columns.
 //-----------------------------------------------------------------------------
-int Matrix::nCols() const {
+int Matrix::nCols() const
+{
    return m_nCols;
 }
 
 //-----------------------------------------------------------------------------
 // Read only access to raw storage.
 //-----------------------------------------------------------------------------
-const double* Matrix::Base() const {
+const double* Matrix::Base() const
+{
    return m_Data;
 }
 
 //-----------------------------------------------------------------------------
 // Read only access to raw storage with an offset.
 //-----------------------------------------------------------------------------
-const double* Matrix::Base( int row, int col ) const {
+const double* Matrix::Base( int row, int col ) const
+{
    assert( row >= 0 && row < m_nRows );
    assert( col >= 0 && col < m_nCols );
 
@@ -315,14 +329,16 @@ const double* Matrix::Base( int row, int col ) const {
 //-----------------------------------------------------------------------------
 // Read/Write access to raw storage.
 //-----------------------------------------------------------------------------
-double* Matrix::Base() {
+double* Matrix::Base()
+{
    return m_Data;
 }
 
 //-----------------------------------------------------------------------------
 // Read/Write access to raw storage with an offset.
 //-----------------------------------------------------------------------------
-double* Matrix::Base( int row, int col ) {
+double* Matrix::Base( int row, int col )
+{
    assert( row >= 0 && row < m_nRows );
    assert( col >= 0 && col < m_nCols );
 
@@ -332,22 +348,26 @@ double* Matrix::Base( int row, int col ) {
 //-----------------------------------------------------------------------------
 // Read only STL-conforming begin() iterators.
 //-----------------------------------------------------------------------------
-const double* Matrix::begin() const {
+const double* Matrix::begin() const
+{
    return m_Data;
 }
 
-const double* Matrix::end() const {
+const double* Matrix::end() const
+{
    return m_Data + m_nRows*m_nCols;
 }
 
 //-----------------------------------------------------------------------------
 // Read/write STL-conforming end() iterator.
 //-----------------------------------------------------------------------------
-double* Matrix::begin() {
+double* Matrix::begin()
+{
    return m_Data;
 }
 
-double* Matrix::end() {
+double* Matrix::end()
+{
    return m_Data + m_nRows*m_nCols;
 }
 
@@ -359,11 +379,12 @@ double* Matrix::end() {
 //-----------------------------------------------------------------------------
 // Output operator.
 //-----------------------------------------------------------------------------
-std::ostream& operator <<( std::ostream& ostr, const Matrix& A ) {
+std::ostream& operator <<( std::ostream& ostr, const Matrix& A )
+{
    // Output the Matrix.
    for (int i = 0; i < A.nRows(); ++i) {
       for (int j = 0; j < A.nCols(); ++j) {
-         ostr << std::scientific << std::setw(15) << std::setprecision(4) << A(i,j);
+         ostr << std::fixed << std::setw(12) << std::setprecision(3) << A(i,j);
       }
       ostr << std::endl;
    }
@@ -379,7 +400,8 @@ std::ostream& operator <<( std::ostream& ostr, const Matrix& A ) {
 //-----------------------------------------------------------------------------
 // Row Matrix of column sums.
 //-----------------------------------------------------------------------------
-void ColumnSum( const Matrix& A, Matrix& x ) {
+void ColumnSum( const Matrix& A, Matrix& x )
+{
    x.Resize( 1, A.nCols() );
    x = 0.0;
 
@@ -391,7 +413,8 @@ void ColumnSum( const Matrix& A, Matrix& x ) {
 //-----------------------------------------------------------------------------
 // Column Matrix of row sums.
 //-----------------------------------------------------------------------------
-void RowSum( const Matrix& A, Matrix& x ) {
+void RowSum( const Matrix& A, Matrix& x )
+{
    x.Resize( A.nRows(), 1 );
    x = 0.0;
 
@@ -403,7 +426,8 @@ void RowSum( const Matrix& A, Matrix& x ) {
 //-----------------------------------------------------------------------------
 // Matrix Length = max( nRows, nCols )
 //-----------------------------------------------------------------------------
-int Length( const Matrix& A ) {
+int Length( const Matrix& A )
+{
    return std::max( A.nRows(), A.nCols() );
 }
 
@@ -415,7 +439,8 @@ int Length( const Matrix& A ) {
 //
 // See Golub and Van Loan, 1996, p. 310.
 //-----------------------------------------------------------------------------
-double Trace( const Matrix& A ) {
+double Trace( const Matrix& A )
+{
    // Check the arguments.
    assert( A.nRows() > 0 && A.nCols() > 0 );
    assert( A.nRows() == A.nCols() );
@@ -433,7 +458,8 @@ double Trace( const Matrix& A ) {
 //
 //    Sum all of the elements in the matrix.
 //-----------------------------------------------------------------------------
-double Sum( const Matrix& A ) {
+double Sum( const Matrix& A )
+{
    // Check the arguments.
    assert( A.nRows() > 0 && A.nCols() > 0 );
 
@@ -445,13 +471,12 @@ double Sum( const Matrix& A ) {
 //
 //    Sum the absolute values all of the elements in the matrix.
 //-----------------------------------------------------------------------------
-double SumAbs( const Matrix& A ) {
+double SumAbs( const Matrix& A )
+{
    // Check the arguments.
    assert( A.nRows() > 0 && A.nCols() > 0 );
 
-   return std::accumulate( A.begin(), A.end(), 0.0, [](double a, double b) {
-      return a + abs(b);
-   } );
+   return std::accumulate( A.begin(), A.end(), 0.0, [](double a, double b){return a + abs(b);} );
 }
 
 //-----------------------------------------------------------------------------
@@ -460,13 +485,12 @@ double SumAbs( const Matrix& A ) {
 //    The MaxAbs of a Matrix is the maximum of the absolute values of the
 //    elements.
 //-----------------------------------------------------------------------------
-double MaxAbs( const Matrix& A ) {
+double MaxAbs( const Matrix& A )
+{
    // Check the arguments.
    assert( A.nRows() > 0 && A.nCols() > 0 );
 
-   return std::accumulate( A.begin(), A.end(), 0.0, [](double a, double b) {
-      return std::max(a, abs(b));
-   } );
+   return std::accumulate( A.begin(), A.end(), 0.0, [](double a, double b){return std::max(a, abs(b));} );
 }
 
 //-----------------------------------------------------------------------------
@@ -477,7 +501,8 @@ double MaxAbs( const Matrix& A ) {
 //
 // See Golub and Van Loan, 1996, p. 56, (2.3.9).
 //-----------------------------------------------------------------------------
-double L1Norm( const Matrix& A ) {
+double L1Norm( const Matrix& A )
+{
    // Check the arguments.
    assert( A.nRows() > 0 && A.nCols() > 0 );
 
@@ -502,7 +527,8 @@ double L1Norm( const Matrix& A ) {
 //
 // See Golub and Van Loan, 1996, p. 56, (2.3.10).
 //-----------------------------------------------------------------------------
-double LInfNorm( const Matrix& A ) {
+double LInfNorm( const Matrix& A )
+{
    // Check the arguments.
    assert( A.nRows() > 0 && A.nCols() > 0 );
 
@@ -527,13 +553,12 @@ double LInfNorm( const Matrix& A ) {
 //
 // See Golub and Van Loan, 1996, p. 55, (2.3.1).
 //-----------------------------------------------------------------------------
-double FNorm( const Matrix& A ) {
+double FNorm( const Matrix& A )
+{
    // Check the arguments.
    assert( A.nRows() > 0 && A.nCols() > 0 );
 
-   return sqrt( std::accumulate(A.begin(), A.end(), 0.0, [](double a, double b) {
-      return a + b*b;
-   }) );
+   return sqrt( std::accumulate(A.begin(), A.end(), 0.0, [](double a, double b){return a + b*b;}) );
 }
 
 
@@ -544,7 +569,8 @@ double FNorm( const Matrix& A ) {
 //-----------------------------------------------------------------------------
 // Matrix transpose : C = A'
 //-----------------------------------------------------------------------------
-void Transpose( const Matrix& A, Matrix& C ) {
+void Transpose( const Matrix& A, Matrix& C )
+{
    // Check the arguments.
    assert( A.nCols() > 0 && A.nRows() > 0 );
 
@@ -562,20 +588,20 @@ void Transpose( const Matrix& A, Matrix& C ) {
 //-----------------------------------------------------------------------------
 // Matrix negation : C = -A
 //-----------------------------------------------------------------------------
-void Negative( const Matrix& A, Matrix& C ) {
+void Negative( const Matrix& A, Matrix& C )
+{
    // Check the arguments.
    assert( A.nCols() > 0 && A.nRows() > 0 );
 
    C.Resize( A.nRows(), A.nCols() );
-   std::transform( A.begin(), A.end(), C.begin(), [](double a) {
-      return -(a);
-   });
+   std::transform( A.begin(), A.end(), C.begin(), [](double a){return -(a);});
 }
 
 //-----------------------------------------------------------------------------
 // Reset a Matrix to an n by n identity Matrix.
 //-----------------------------------------------------------------------------
-void Identity( Matrix& A, int n ) {
+void Identity( Matrix& A, int n )
+{
    // Make A a square n x n Matrix
    A.Resize( n, n );
 
@@ -587,16 +613,13 @@ void Identity( Matrix& A, int n ) {
 //-----------------------------------------------------------------------------
 // Slice Matrix operations.
 //-----------------------------------------------------------------------------
-void Slice( const Matrix& A, const std::vector<int>& row_flag, const std::vector<int>& col_flag, Matrix& C ) {
+void Slice( const Matrix& A, const std::vector<int>& row_flag, const std::vector<int>& col_flag, Matrix& C )
+{
    assert( int(row_flag.size()) == A.nRows() );
    assert( int(col_flag.size()) == A.nCols() );
 
-   int nRows = std::count_if( row_flag.begin(), row_flag.end(), [](int i) {
-      return i != 0;
-   } );
-   int nCols = std::count_if( col_flag.begin(), col_flag.end(), [](int i) {
-      return i != 0;
-   } );
+   int nRows = std::count_if( row_flag.begin(), row_flag.end(), [](int i){return i != 0;} );
+   int nCols = std::count_if( col_flag.begin(), col_flag.end(), [](int i){return i != 0;} );
    C.Resize( nRows, nCols );
 
    if( nRows*nCols > 0 ) {
@@ -641,6 +664,7 @@ void SliceRows( const Matrix& A, const std::vector<int>& row_flag, Matrix& C ) {
    }
 }
 
+
 //=============================================================================
 // scalar/Matrix arithmetic routines.
 //=============================================================================
@@ -648,7 +672,8 @@ void SliceRows( const Matrix& A, const std::vector<int>& row_flag, Matrix& C ) {
 //-----------------------------------------------------------------------------
 // scalar/Matrix addition:  C = a+A (term-by-term)
 //-----------------------------------------------------------------------------
-void Add_aM( double a, const Matrix& A, Matrix& C ) {
+void Add_aM( double a, const Matrix& A, Matrix& C )
+{
    // Check the arguments.
    assert( A.nRows() > 0 && A.nCols() > 0 );
 
@@ -666,7 +691,8 @@ void Add_aM( double a, const Matrix& A, Matrix& C ) {
 //-----------------------------------------------------------------------------
 // scalar/Matrix subtraction:  C = a-A (term-by-term)
 //-----------------------------------------------------------------------------
-void Subtract_aM( double a, const Matrix& A, Matrix& C ) {
+void Subtract_aM( double a, const Matrix& A, Matrix& C )
+{
    // Check the arguments.
    assert( A.nRows() > 0 && A.nCols() > 0 );
 
@@ -684,7 +710,8 @@ void Subtract_aM( double a, const Matrix& A, Matrix& C ) {
 //-----------------------------------------------------------------------------
 // scalar/Matrix multiplication:  C = a*A (term-by-term)
 //-----------------------------------------------------------------------------
-void Multiply_aM( double a, const Matrix& A, Matrix& C ) {
+void Multiply_aM( double a, const Matrix& A, Matrix& C )
+{
    // Check the arguments.
    assert( A.nRows() > 0 && A.nCols() > 0 );
 
@@ -707,7 +734,8 @@ void Multiply_aM( double a, const Matrix& A, Matrix& C ) {
 //-----------------------------------------------------------------------------
 // Matrix addition:  C = A + B
 //-----------------------------------------------------------------------------
-void Add_MM( const Matrix& A, const Matrix& B, Matrix& C ) {
+void Add_MM( const Matrix& A, const Matrix& B, Matrix& C )
+{
    // Check the arguments.
    assert( A.nRows() > 0 && A.nCols() > 0 );
    assert( B.nRows() > 0 && B.nCols() > 0 );
@@ -729,7 +757,8 @@ void Add_MM( const Matrix& A, const Matrix& B, Matrix& C ) {
 //-----------------------------------------------------------------------------
 // Matrix subtraction:  C = A - B
 //-----------------------------------------------------------------------------
-void Subtract_MM( const Matrix& A, const Matrix& B, Matrix& C ) {
+void Subtract_MM( const Matrix& A, const Matrix& B, Matrix& C )
+{
    // Check the arguments.
    assert( A.nRows() > 0 && A.nCols() > 0 );
    assert( B.nRows() > 0 && B.nCols() > 0 );
@@ -756,7 +785,8 @@ void Subtract_MM( const Matrix& A, const Matrix& B, Matrix& C ) {
 //-----------------------------------------------------------------------------
 // Matrix = Matrix/Matrix multiply:  C = AB
 //-----------------------------------------------------------------------------
-void Multiply_MM( const Matrix& A, const Matrix& B, Matrix& C ) {
+void Multiply_MM( const Matrix& A, const Matrix& B, Matrix& C )
+{
    // Check the arguments.
    assert( A.nRows() > 0 && A.nCols() > 0 );
    assert( B.nRows() > 0 && B.nCols() > 0 );
@@ -776,7 +806,8 @@ void Multiply_MM( const Matrix& A, const Matrix& B, Matrix& C ) {
 //-----------------------------------------------------------------------------
 // Matrix = Matrix/Matrix multiply:  C = A'B
 //-----------------------------------------------------------------------------
-void Multiply_MtM( const Matrix& A, const Matrix& B, Matrix& C ) {
+void Multiply_MtM( const Matrix& A, const Matrix& B, Matrix& C )
+{
    // Check the arguments.
    assert( A.nRows() > 0 && A.nCols() > 0 );
    assert( B.nRows() > 0 && B.nCols() > 0 );
@@ -796,7 +827,8 @@ void Multiply_MtM( const Matrix& A, const Matrix& B, Matrix& C ) {
 //-----------------------------------------------------------------------------
 // Matrix = Matrix/Matrix multiply:  C = AB'
 //-----------------------------------------------------------------------------
-void Multiply_MMt( const Matrix& A, const Matrix& B, Matrix& C ) {
+void Multiply_MMt( const Matrix& A, const Matrix& B, Matrix& C )
+{
    // Check the arguments.
    assert( A.nRows() > 0 && A.nCols() > 0 );
    assert( B.nRows() > 0 && B.nCols() > 0 );
@@ -816,7 +848,8 @@ void Multiply_MMt( const Matrix& A, const Matrix& B, Matrix& C ) {
 //-----------------------------------------------------------------------------
 // Matrix = Matrix/Matrix multiply:  C = A'B'
 //-----------------------------------------------------------------------------
-void Multiply_MtMt( const Matrix& A, const Matrix& B, Matrix& C ) {
+void Multiply_MtMt( const Matrix& A, const Matrix& B, Matrix& C )
+{
    // Check the arguments.
    assert( A.nRows() > 0 && A.nCols() > 0 );
    assert( B.nRows() > 0 && B.nCols() > 0 );
@@ -836,7 +869,8 @@ void Multiply_MtMt( const Matrix& A, const Matrix& B, Matrix& C ) {
 //-----------------------------------------------------------------------------
 // Dot product = A'B
 //-----------------------------------------------------------------------------
-double DotProduct( const Matrix& A, const Matrix& B ) {
+double DotProduct( const Matrix& A, const Matrix& B )
+{
    // Check the arguments.
    assert( isVector(A) && isVector(B) );
    assert( Length(A) == Length(B) );
@@ -847,7 +881,8 @@ double DotProduct( const Matrix& A, const Matrix& B ) {
 //-----------------------------------------------------------------------------
 // Quadratic form = a' B c
 //-----------------------------------------------------------------------------
-double QuadraticForm_MtMM( const Matrix& a, const Matrix& B, const Matrix& c ) {
+double QuadraticForm_MtMM( const Matrix& a, const Matrix& B, const Matrix& c )
+{
    // Check the arguments.
    assert( a.nRows() > 0 && a.nCols() == 1 );
    assert( a.nRows() == B.nRows() );
@@ -866,7 +901,8 @@ double QuadraticForm_MtMM( const Matrix& a, const Matrix& B, const Matrix& c ) {
 //-----------------------------------------------------------------------------
 // Quadratic form = a B c
 //-----------------------------------------------------------------------------
-double QuadraticForm_MMM( const Matrix& a, const Matrix& B, const Matrix& c ) {
+double QuadraticForm_MMM( const Matrix& a, const Matrix& B, const Matrix& c )
+{
    // Check the arguments.
    assert( a.nRows() == 1 && a.nCols() > 0 );
    assert( a.nCols() == B.nRows() );
@@ -887,7 +923,16 @@ double QuadraticForm_MMM( const Matrix& a, const Matrix& B, const Matrix& c ) {
 //=============================================================================
 
 //-----------------------------------------------------------------------------
-bool isCongruent( const Matrix& A, const Matrix& B ) {
+bool isSquare(const Matrix& A) {
+   if (A.nRows() > 0 && A.nRows() == A.nCols())
+      return true;
+   else
+      return false;
+}
+
+//-----------------------------------------------------------------------------
+bool isCongruent( const Matrix& A, const Matrix& B )
+{
    // Compare the sizes
    if (A.nRows() == B.nRows() && A.nCols() == B.nCols())
       return true;
@@ -896,7 +941,8 @@ bool isCongruent( const Matrix& A, const Matrix& B ) {
 }
 
 //-----------------------------------------------------------------------------
-bool isClose( const Matrix& A, const Matrix& B, double tol ) {
+bool isClose( const Matrix& A, const Matrix& B, double tol )
+{
    // Compare the sizes first.
    if (A.nRows() != B.nRows() || A.nCols() != B.nCols())
       return false;
@@ -917,16 +963,19 @@ bool isClose( const Matrix& A, const Matrix& B, double tol ) {
 //=============================================================================
 
 //-----------------------------------------------------------------------------
-bool isRow( const Matrix& A ) {
+bool isRow( const Matrix& A )
+{
    return A.nRows() == 1 && A.nCols() > 0;
 }
 
 //-----------------------------------------------------------------------------
-bool isCol( const Matrix& A ) {
+bool isCol( const Matrix& A )
+{
    return A.nCols() == 1 && A.nRows() > 0;
 }
 
 //-----------------------------------------------------------------------------
-bool isVector( const Matrix& A ) {
+bool isVector( const Matrix& A )
+{
    return isRow(A) || isCol(A);
 }
